@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "powershell -Command \"Remove-Item -Recurse -Force .\\docs; ng build --output-path docs --base-href /ramschema-app/; Copy-Item -Path .\\docs\\browser\\* -Destination .\\docs -Recurse; Remove-Item -Recurse -Force .\\docs\\browser\""
+
   },
   "private": true,
   "dependencies": {
