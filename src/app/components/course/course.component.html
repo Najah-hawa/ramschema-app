@@ -1,0 +1,53 @@
+<div class="course-list">
+  <h2>Kurser</h2>
+
+  <!-- filtera data utifårn en sökfält -->
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="applyFilters()"
+    placeholder="Sök efter kurskod eller kursnamn"
+    class="search-input"
+  />
+
+  <!--skapa en knapp för sprting -->
+  <div class="sort-controls">
+    <label for="sortField">Sortera på:</label>
+    <select id="sortField" [(ngModel)]="sortColumn" (change)="applyFilters()">
+      <option value="code">Kurskod</option>
+      <option value="coursename">Kursnamn</option>
+      <option value="progression">Progression</option>
+    </select>
+  
+    <button (click)="toggleSortDirection()" >
+      Sorterings ordning: {{ sortAsc ? 'Stigande ↑' : 'Fallande ↓' }} 
+    </button>
+  </div>
+  
+  <!--Tabell med som visar kurserna -->
+  <!--antligen ska man visa listan eller om inga kurser finns ska man visa felmeddelande -->
+  <table class="course-table" *ngIf="filteredCourses.length > 0; else noCourses">
+    <!--rubriker -->
+    <thead>
+      <tr>
+        <th> Kurskod </th>
+        <th> Kursnamn </th>
+        <th> Progression </th>
+      </tr>
+    </thead>
+    <!--anroper information från json filen-->
+    <tbody>
+      <tr *ngFor="let course of filteredCourses">
+        <td>{{ course.code }}</td>
+        <td>{{ course.coursename }}</td>
+        <td>{{ course.progression }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!--  Meddelande om det inte finns några kurser -->
+  <ng-template #noCourses>
+    <p>Inga kurser tillgängliga.</p>
+  </ng-template>
+
+</div>
